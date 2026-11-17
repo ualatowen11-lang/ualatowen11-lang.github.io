@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owen Ualat — Video Editor & Multimedia Designer</title>
+<meta name="description" content="Owen Ualat — video editor, motion designer and multimedia designer based in Quezon City, Philippines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3efe6; --card:#fffdf8; --ink:#1d1b18; --muted:#6b655b; --line:#d9d2c3;
+  --tomato:#e5533a; --mustard:#f1bf45; --teal:#2b9a8c; --cobalt:#2f56cf; --pink:#ee7ba6;
+  --shadow:0 1px 0 rgba(0,0,0,.04),0 10px 24px -12px rgba(40,30,10,.35);
+  --hand:'Caveat',cursive; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);font:400 17px/1.6 'Bricolage Grotesque',system-ui,sans-serif;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:28px 28px;background-position:-1px -1px;
+}
+/* faint paper grain */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.hand{font-family:var(--hand)}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px;border-radius:4px}
+
+/* nav */
+nav{position:sticky;top:12px;z-index:50;margin:12px auto 0;max-width:1120px;padding:0 20px}
+.navbar{display:flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--ink);border-radius:12px;padding:6px;box-shadow:var(--shadow)}
+.navbar a{text-decoration:none;padding:8px 12px;border-radius:8px}
+.navbar a:hover{background:var(--paper)}
+.logo{display:grid;place-items:center;width:38px;height:38px;padding:0!important;background:var(--tomato)!important;color:#fff;font-weight:800;border-radius:9px!important}
+.navbar .spacer{flex:1}
+.navbar .cta{background:var(--ink);color:var(--card)}
+.navbar .cta:hover{background:#333}
+@media(max-width:640px){.navbar .hide-sm{display:none}}
+
+/* hero */
+.hero{text-align:center;padding:72px 0 40px;position:relative}
+.hero .hi{font-family:var(--hand);font-size:28px;color:var(--muted);margin:0}
+.namebox{display:inline-block;position:relative;margin:6px 0 18px;padding:10px 28px 4px;border:2.5px solid var(--tomato);
+  border-radius:255px 18px 225px 18px/18px 225px 18px 255px;background:var(--card);box-shadow:var(--shadow);transform:rotate(-1.2deg)}
+.namebox h1{margin:0;font-weight:800;font-size:clamp(52px,11vw,124px);line-height:.95;letter-spacing:-.03em}
+.note{position:absolute;font-family:var(--hand);font-size:21px;font-weight:700;padding:4px 12px;border-radius:3px;box-shadow:var(--shadow);white-space:nowrap}
+.n1{background:var(--mustard);left:-34px;bottom:-26px;transform:rotate(-6deg)}
+.n2{background:#bfe6dd;right:-30px;top:-22px;transform:rotate(5deg)}
+.n3{background:#f9c9d9;right:-46px;bottom:-30px;transform:rotate(-3deg)}
+@media(max-width:640px){.n1{left:-6px}.n2{right:-4px}.n3{right:-6px;bottom:-36px}}
+.tagline{font-size:clamp(24px,3.6vw,38px);font-weight:600;line-height:1.2;max-width:760px;margin:36px auto 10px;letter-spacing:-.01em}
+.tagline mark{background:linear-gradient(transparent 58%,var(--mustard) 58%);color:inherit;padding:0 2px}
+.status{display:inline-flex;align-items:center;gap:8px;margin-top:8px}
+.dot{width:9px;height:9px;border-radius:50%;background:#2dbd6e;box-shadow:0 0 0 4px #2dbd6e33}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;padding:12px 20px;border:1.5px solid var(--ink);border-radius:10px;background:var(--card);box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+.btn.dark{background:var(--ink);color:var(--card)}
+
+/* section headers */
+section{padding:64px 0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:28px;flex-wrap:wrap}
+.sec-head h2{margin:0;font-size:clamp(30px,4vw,44px);font-weight:800;letter-spacing:-.02em}
+.sec-head .hand{font-size:24px;color:var(--tomato)}
+.label{display:inline-block;background:var(--card);border:1.5px solid var(--ink);padding:3px 10px;border-radius:6px}
+
+/* about */
+.about{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+@media(max-width:820px){.about{grid-template-columns:1fr}}
+.index-card{background:var(--card);border-radius:6px;box-shadow:var(--shadow);padding:30px 32px 26px;position:relative;
+  background-image:linear-gradient(transparent 31px,#d6e3f2 32px);background-size:100% 32px;background-position:0 58px}
+.index-card::before{content:"";position:absolute;top:0;bottom:0;left:22px;border-left:1.5px solid #f2a9a9}
+.index-card p{margin:0 0 14px 10px;line-height:32px}
+.index-card .hand{font-size:28px;margin-left:10px;color:var(--cobalt)}
+.tape{position:absolute;width:96px;height:26px;background:rgba(241,191,69,.75);transform:rotate(-4deg);top:-12px;left:42%;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tape.t2{background:rgba(149,196,232,.7)}
+.tape.t3{background:rgba(238,123,166,.6)}
+.polaroid{background:var(--card);padding:14px 14px 50px;box-shadow:var(--shadow);transform:rotate(3deg);max-width:320px;margin:0 auto;position:relative}
+.polaroid .ph{aspect-ratio:1;display:grid;place-items:center;background:var(--cobalt);color:var(--card);font-weight:800;font-size:96px;letter-spacing:-.04em;overflow:hidden}
+.polaroid figcaption{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-family:var(--hand);font-size:24px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0 10px}
+.chip{font-weight:600;font-size:15px;padding:6px 14px;color:var(--ink);clip-path:polygon(2% 0,98% 4%,100% 50%,97% 100%,3% 96%,0 50%)}
+.chip:nth-child(5n+1){background:var(--mustard)}.chip:nth-child(5n+2){background:#a7dccf}.chip:nth-child(5n+3){background:#f6b3c9}.chip:nth-child(5n+4){background:#b6c6f3}.chip:nth-child(5n+5){background:#f6b39f}
+
+/* featured */
+.feature{display:grid;grid-template-columns:1.3fr 1fr;background:var(--ink);color:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+@media(max-width:820px){.feature{grid-template-columns:1fr}}
+.feature .media{position:relative;cursor:pointer;border:0;padding:0;background:#000;min-height:260px}
+.feature .media img{width:100%;height:100%;object-fit:cover;opacity:.9}
+.feature .body{padding:30px}
+.feature h3{font-size:36px;margin:6px 0 10px;line-height:1.05}
+.feature .meta{color:#c9c2b4}
+.feature ul{padding-left:18px;margin:14px 0 0}
+.feature li{margin-bottom:6px}
+.play{position:absolute;inset:0;margin:auto;width:72px;height:72px;border-radius:50%;background:var(--tomato);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.play::after{content:"";border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px}
+
+/* filters + grid */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.filters button{font:600 15px 'Bricolage Grotesque',sans-serif;padding:8px 14px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--card)}
+.grid{columns:3 280px;column-gap:24px}
+.item{break-inside:avoid;margin:0 0 28px;display:block;width:100%;text-align:left;border:0;cursor:pointer;font:inherit;color:inherit;
+  background:var(--card);padding:10px 10px 14px;box-shadow:var(--shadow);position:relative;transition:transform .2s ease}
+.item:nth-child(4n+1){transform:rotate(-1.2deg)}.item:nth-child(4n+2){transform:rotate(.9deg)}.item:nth-child(4n+3){transform:rotate(-.5deg)}.item:nth-child(4n){transform:rotate(1.4deg)}
+.item:hover,.item:focus-visible{transform:rotate(0) translateY(-4px)}
+.item .thumb{position:relative;background:#e9e3d6;overflow:hidden}
+.item .thumb img{width:100%;height:auto;min-height:120px;object-fit:cover}
+.item .thumb .play{width:52px;height:52px}.item .thumb .play::after{border-left-width:15px;border-top-width:9px;border-bottom-width:9px;margin-left:4px}
+.item .cap{padding:10px 4px 0}
+.item .cap strong{display:block;font-size:17px;line-height:1.25}
+.item .cap span{color:var(--muted);font-size:14px}
+.item .tape{width:70px;height:22px;top:-10px}
+/* video cards with no poster image: a labelled cassette-style card */
+.slate{aspect-ratio:16/9;display:flex;flex-direction:column;justify-content:space-between;padding:14px;color:var(--ink)}
+.slate b{font-size:40px;line-height:1;font-weight:800;letter-spacing:-.03em}
+.slate.c0{background:var(--mustard)}.slate.c1{background:#a7dccf}.slate.c2{background:#f6b3c9}.slate.c3{background:#b6c6f3}.slate.c4{background:#f6b39f}
+
+/* experience */
+.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:36px}
+@media(max-width:820px){.cols{grid-template-columns:1fr}}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{background:var(--card);box-shadow:var(--shadow);border-radius:6px;padding:16px 20px;margin-bottom:14px;border-left:6px solid var(--teal)}
+.timeline li:nth-child(2){border-color:var(--tomato)}.timeline li:nth-child(3){border-color:var(--cobalt)}.timeline li:nth-child(4){border-color:var(--mustard)}
+.timeline strong{display:block;font-size:18px}
+.timeline span{color:var(--muted);font-size:15px}
+.stamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.stamp{background:var(--card);padding:14px;text-align:center;box-shadow:var(--shadow);
+  -webkit-mask:radial-gradient(circle 5px at 5px 5px,#0000 98%,#000) -5px -5px/12px 12px;mask:radial-gradient(circle 5px at 5px 5px,#0000 98%,#000) -5px -5px/12px 12px}
+.stamp strong{display:block;font-size:15px;line-height:1.25;margin:6px 0 4px}
+.stamp span{color:var(--muted);font-size:13px}
+.stamp .yr{font-family:var(--mono);font-size:11px;color:var(--tomato)}
+
+/* contact postcard */
+.postcard{display:grid;grid-template-columns:1fr 1fr;background:var(--card);box-shadow:var(--shadow);border-radius:6px;padding:36px;position:relative}
+.postcard::before{content:"";position:absolute;top:30px;bottom:30px;left:50%;border-left:1.5px dashed var(--line)}
+@media(max-width:820px){.postcard{grid-template-columns:1fr;padding:26px}.postcard::before{display:none}}
+.postcard h2{font-size:clamp(34px,5vw,54px);line-height:1;margin:0 0 14px;letter-spacing:-.02em}
+.postcard .msg{padding-right:36px}
+.postcard .addr{padding-left:36px;position:relative}
+@media(max-width:820px){.postcard .msg,.postcard .addr{padding:0}.postcard .addr{margin-top:24px}}
+.addr a{display:block;text-decoration:none;font-size:19px;padding:10px 0;border-bottom:1.5px solid var(--line)}
+.addr a:hover{color:var(--tomato)}
+.addr .mono{display:block;color:var(--muted);font-size:11px}
+.pstamp{position:absolute;right:0;top:-8px;width:84px;height:100px;background:var(--tomato);color:#fff;display:grid;place-items:center;text-align:center;font-weight:800;line-height:1;transform:rotate(6deg);
+  -webkit-mask:radial-gradient(circle 4px at 4px 4px,#0000 98%,#000) -4px -4px/10px 10px;mask:radial-gradient(circle 4px at 4px 4px,#0000 98%,#000) -4px -4px/10px 10px}
+@media(max-width:820px){.pstamp{display:none}}
+footer{text-align:center;padding:30px 0 50px;color:var(--muted)}
+
+/* lightbox */
+dialog{border:0;padding:0;background:transparent;max-width:min(1100px,94vw);width:100%}
+dialog::backdrop{background:rgba(20,18,15,.82)}
+.lb{background:var(--card);padding:12px;box-shadow:var(--shadow)}
+.lb .frame{aspect-ratio:16/9;background:#000}
+.lb iframe{width:100%;height:100%;border:0;display:block}
+.lb img{max-height:80vh;margin:0 auto;width:auto}
+.lb-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 4px 2px}
+.lb-bar a{font-size:14px}
+.close{font:600 15px 'Bricolage Grotesque',sans-serif;border:1.5px solid var(--ink);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="navbar">
+    <a class="logo" href="#top" aria-label="Owen Ualat, home">OU</a>
+    <a href="#work">Work</a>
+    <a href="#about" class="hide-sm">About</a>
+    <a href="#experience" class="hide-sm">Experience</a>
+    <span class="spacer"></span>
+    <a href="resume.pdf" target="_blank" rel="noopener">Résumé</a>
+    <a href="#contact" class="cta">Contact</a>
+  </div>
+</nav>
+
+<header class="wrap hero" id="top">
+  <p class="hi">hi, my name is</p>
+  <div class="namebox">
+    <h1>OWEN UALAT</h1>
+    <span class="note n1">video editor</span>
+    <span class="note n2">motion designer</span>
+    <span class="note n3">Quezon City, PH</span>
+  </div>
+  <p class="tagline">I edit, animate and design <mark>learning content people actually want to watch.</mark></p>
+  <div class="status mono"><span class="dot"></span> Open to video editing &amp; design roles</div>
+  <div class="btns">
+    <a class="btn dark" href="#work">See the work ↓</a>
+    <a class="btn" href="resume.pdf" target="_blank" rel="noopener">Download résumé</a>
+  </div>
+</header>
+
+<main>
+<section class="wrap" id="about">
+  <div class="sec-head"><span class="label mono">01 · About</span><h2>What's up</h2><span class="hand">(the short version)</span></div>
+  <div class="about">
+    <div class="index-card">
+      <span class="tape"></span>
+      <p class="hand">Hey! I'm Owen.</p>
+      <p>I'm a multimedia designer and video editor, and I currently lead the Educational Media Unit at FEU Institute of Technology. Day to day I edit lecture series, build title systems and motion graphics, and design the visuals that hold a course together.</p>
+      <p>I graduated cum laude in Entertainment &amp; Multimedia Computing. My thesis film, <em>Mitolohiya</em>, became an IEEE conference paper. I also edit part-time for Vofsi Visuals.</p>
+      <div class="chips">
+        <span class="chip">Premiere Pro</span><span class="chip">After Effects</span><span class="chip">Photoshop</span>
+        <span class="chip">Illustrator</span><span class="chip">Blender</span><span class="chip">Maya</span>
+        <span class="chip">Motion graphics</span><span class="chip">VFX &amp; compositing</span><span class="chip">Illustration</span>
+      </div>
+    </div>
+    <figure class="polaroid">
+      <span class="tape t2"></span>
+      <div class="ph" aria-hidden="true">OU</div>
+      <figcaption>me, probably rendering</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="wrap" id="featured">
+  <div class="sec-head"><span class="label mono">02 · Featured</span><h2>Mitolohiya</h2><span class="hand">thesis film → IEEE paper</span></div>
+  <article class="feature">
+    <button class="media" type="button" data-open="feat" aria-label="Play Mitolohiya film">
+      <img src="https://i.ytimg.com/vi/cZzwMUAXH8I/hqdefault.jpg" alt="Still from the Mitolohiya short film" loading="lazy">
+      <span class="play"></span>
+    </button>
+    <div class="body">
+      <span class="mono meta">Visionary Studios · 2022</span>
+      <h3>An anthology of Philippine mythology</h3>
+      <p class="meta">A hybrid-animation short film featuring Hanan, Lakapati and Tala, plus a promotional website.</p>
+      <ul>
+        <li><strong>My role:</strong> illustrator, animator and video editor</li>
+        <li>Best Regional Entry, Animahenasyon 2022</li>
+        <li>Published at IEEE HNICEM 2022 · <a href="https://doi.org/10.1109/HNICEM57413.2022.10109431" target="_blank" rel="noopener">read the paper</a></li>
+      </ul>
+    </div>
+  </article>
+</section>
+
+<section class="wrap" id="work">
+  <div class="sec-head"><span class="label mono">03 · Work</span><h2>The pile</h2><span class="hand">click anything to open it</span></div>
+  <div class="filters" role="group" aria-label="Filter work">
+    <button type="button" data-f="all" aria-pressed="true">Everything</button>
+    <button type="button" data-f="edit" aria-pressed="false">Video editing</button>
+    <button type="button" data-f="motion" aria-pressed="false">Motion &amp; VFX</button>
+    <button type="button" data-f="design" aria-pressed="false">Graphic design</button>
+    <button type="button" data-f="art" aria-pressed="false">Illustration</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="wrap" id="experience">
+  <div class="sec-head"><span class="label mono">04 · Experience</span><h2>Where I've been</h2></div>
+  <div class="cols">
+    <ol class="timeline">
+      <li><strong>Educational Media Unit Lead</strong><span>FEU Institute of Technology · Nov 2025 – present</span></li>
+      <li><strong>Video Editor</strong><span>Vofsi Visuals · Part-time · Jul 2025 – present</span></li>
+      <li><strong>Multimedia Designer</strong><span>FEU Institute of Technology · Jan 2023 – Nov 2025</span></li>
+      <li><strong>Multimedia Designer (Intern) → Junior Multimedia Designer</strong><span>FEU Institute of Technology · Jun – Dec 2022</span></li>
+      <li><strong>BS Entertainment &amp; Multimedia Computing, Cum Laude</strong><span>FEU Institute of Technology · 2018 – 2023</span></li>
+    </ol>
+    <div class="stamps">
+      <div class="stamp"><span class="yr">2024</span><strong>Adobe Certified Professional, VFX &amp; Motion Graphics (After Effects)</strong><span>Certiport</span></div>
+      <div class="stamp"><span class="yr">2022</span><strong>Autodesk Maya Certified User</strong><span>Certiport</span></div>
+      <div class="stamp"><span class="yr">2022</span><strong>Best Regional Entry</strong><span>Animahenasyon</span></div>
+      <div class="stamp"><span class="yr">2022</span><strong>Best Project, EMC &amp; MMA batch</strong><span>FEU Tech</span></div>
+      <div class="stamp"><span class="yr">2022</span><strong>Top Performing Student</strong><span>FEU Tech</span></div>
+      <div class="stamp"><span class="yr">2026</span><strong>Learning Video Production &amp; Editing</strong><span>LinkedIn Learning</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="contact">
+  <div class="postcard">
+    <div class="msg">
+      <span class="mono" style="color:var(--muted)">Postcard · from Quezon City</span>
+      <h2>Got a project or a role?</h2>
+      <p class="hand" style="font-size:26px;margin:0">Let's make something people actually finish watching.</p>
+    </div>
+    <div class="addr">
+      <div class="pstamp">PH<br>₱20</div>
+      <a href="mailto:ualat.owen11@gmail.com"><span class="mono">Email</span>ualat.owen11@gmail.com</a>
+      <a href="https://www.linkedin.com/in/owenualat" target="_blank" rel="noopener"><span class="mono">LinkedIn</span>in/owenualat</a>
+      <a href="https://www.instagram.com/schatz_128" target="_blank" rel="noopener"><span class="mono">Instagram</span>@schatz_128</a>
+      <a href="https://www.facebook.com/owen.ualat" target="_blank" rel="noopener"><span class="mono">Facebook</span>owen.ualat</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="mono">© 2026 Owen Ualat · made by hand (and a lot of render time)</footer>
+
+<dialog id="lb" aria-label="Preview">
+  <div class="lb">
+    <div class="frame" id="lb-frame"></div>
+    <div class="lb-bar"><strong id="lb-title"></strong><span><a id="lb-link" target="_blank" rel="noopener">Open original ↗</a>&nbsp;&nbsp;<button class="close" type="button" id="lb-close">Close ✕</button></span></div>
+  </div>
+</dialog>
+
+<script>
+// Every Drive file below is owned by Owen and shared "anyone with the link" (checked Nov 2026).
+const D = id => ({thumb:`https://drive.google.com/thumbnail?id=${id}&sz=w900`, embed:`https://drive.google.com/file/d/${id}/preview`, link:`https://drive.google.com/file/d/${id}/view`});
+const DI = id => ({thumb:`https://drive.google.com/thumbnail?id=${id}&sz=w900`, full:`https://drive.google.com/thumbnail?id=${id}&sz=w2000`, link:`https://drive.google.com/file/d/${id}/view`});
+const CCV = id => ({embed:`https://www-ccv.adobe.io/v1/player/ccv/${id}/embed?bgcolor=%23191919&api_key=BehancePro2View`, link:`https://onualat.myportfolio.com/`});
+const P = f => { const u = `https://cdn.myportfolio.com/d2dcd327-d42d-4628-928b-74ede86790d1/${f}`; return {thumb:u, full:u, link:u}; };
+
+const works = [
+  // video editing (FEU Tech + Vofsi)
+  {cat:'edit', title:'EdITHABLE EP7 — Into the Paraverse (recap)', sub:'Event recap edit · 2025', ...D('12R3PGoV37CgfMLavMWEYchcy0Dpx4sNK')},
+  {cat:'edit', title:'The Paraverse — video presentation', sub:'Edit + subtitles · 2025', ...D('1_ctIgr23uyOglgfDLtVo3angnbPgGJj3')},
+  {cat:'edit', title:'Arcadia — teaser', sub:'Teaser edit · 2026', ...D('1Yy_w7CDq7hHdBBY69Xk7rMtJduBD8foV')},
+  {cat:'edit', title:'Outstanding Young Scientist — entry film', sub:'Documentary edit · 2025', ...D('1k1kHWkENckpw51esHv29G06MD96m20WC')},
+  {cat:'edit', title:'Virtual World: Summer Edition — recap', sub:'Event recap · 2024', ...D('12ZOiYBkIN52VSmCE-ZANyQSQVK1D1UFc')},
+  {cat:'edit', title:'SMART-AIMED classroom simulation', sub:'Scripted shoot + edit · 2026', ...D('1Gw6iuZqivfLGOW-ipWF3zoJqMcBXb-Ru')},
+  {cat:'edit', title:'Episode 64', sub:'Weekly series edit · 2026', ...D('11HohpK__Oo4IUlHwYoYxdxxaI3Z6s4Tw')},
+  // motion
+  {cat:'motion', title:'Grow Series — opening billboard', sub:'Motion graphics · 2026', ...D('1lK4i5sZX8bruFGk4hSufBLPR1SGDAKzo')},
+  {cat:'motion', title:'Grow Series — closing billboard', sub:'Motion graphics · 2026', ...D('1_Rlaj9yEaBH4q8Jf52NvpMwqsxiOBCcQ')},
+  {cat:'motion', title:'Masterclass — title animation', sub:'Title system · 2026', ...D('1KCwwAiJ6JqLr9DYCTgVoGkvLW1cEFeiN')},
+  ...['C7rrGLUQLq9','IfZG9rImziM','QkKMZ3dKdCZ','IgRoiMc6_u_','G_8Q-4XSQQU','EQQSxgmm-4S'].map((id,i)=>({cat:'motion', title:`2D motion piece ${String(i+1).padStart(2,'0')}`, sub:'2D animation', slate:'2D', ...CCV(id)})),
+  ...['W4FFzHIqbns','53regDphDLG','GJ2QWwzBmX_','8_Tnm7pB6yn','EhAz8XRpH2R','KHWUwY3quFN'].map((id,i)=>({cat:'motion', title:`VFX shot ${String(i+1).padStart(2,'0')}`, sub:'Compositing · After Effects', slate:'VFX', ...CCV(id)})),
+  ...['CQ_98rS6Kfe','QvwLH6fk8je','QYFV8zthWov','M9bLVPaaTAL'].map((id,i)=>({cat:'motion', title:`3D animation ${String(i+1).padStart(2,'0')}`, sub:'3D · Blender / Maya', slate:'3D', ...CCV(id)})),
+  ...['Erda6gXFCQM','MjMAoY3NuwS','-K8_nenmhKE','SQNQeHYXQHI','TtwAwYzkeF-','JraPVfYi9Rj','GrFrfxJbHGR','J2BzBRzb-rt','UW22j-8W5wa','2uBY4ZZjQ6E'].map((id,i)=>({cat:'edit', title:`Edit reel ${String(i+1).padStart(2,'0')}`, sub:'Video editing', slate:'EDIT', ...CCV(id)})),
+  // graphic design
+  {cat:'design', title:'Trick or Tech', sub:'Event key visual · 2026', ...DI('1IJtddOvvxKznb6l5toGI9InpHA1d3-aM')},
+  {cat:'design', title:'Spooktacular badges — Student', sub:'Badge set · 2026', ...DI('1CUewYkmel94F1F7Auk6OswIFrQjcj8Bd')},
+  {cat:'design', title:'Spooktacular badges — The Haunted Class', sub:'Badge set · 2026', ...DI('1kBqO15U-if0HbOFmEBws801pA07Pu4p0')},
+  {cat:'design', title:'Inker badges — Prismatic', sub:'Achievement badge · 2026', ...DI('1RiVN5hOSNgXl53RhwNuny8jl1E0FTQ_j')},
+  {cat:'design', title:'Inker badges — Master', sub:'Achievement badge · 2026', ...DI('151b75BzwLkiNg0Re6DD-GdVqDEAWaswM')},
+  {cat:'design', title:'Heritage Month — HABI Champion', sub:'Award card · 2026', ...DI('1CajTNvG8L8CmEDERigUBkG0lx_Ss-6Rf')},
+  {cat:'design', title:'Heritage Month — KUNDIMAN Champion', sub:'Award card · 2026', ...DI('1wteO7Z-3lgL3Sq2ctNKyZJL3dthkmAYu')},
+  {cat:'design', title:'Heritage Month — HIRAYA Champion', sub:'Award card · 2026', ...DI('1EmFAU73NIU7FjA37PPE7Ctx7KtWIIcw7')},
+  {cat:'design', title:'Heritage Month — INDAKAN Champion', sub:'Award card · 2026', ...DI('1JuDwcSqTGDYByAtrVGypZ465hnC7Fa5c')},
+  {cat:'design', title:'Logo design', sub:'Identity', ...P('47b52b69-dd93-4c11-be28-963da014786e_rw_1920.jpg?h=1abaae1e7a2e62e80727dd140effb3f4')},
+  ...['c7a5863f-efb5-408e-a9bf-9ae15cccedcc_rw_1920.png?h=fb6fb270dde7afe9bfc7b0fc2e41e06b','d56f9c9c-32c5-4343-a35a-ce9ac15d22f5_rw_1920.png?h=b81034d8727d85e58b6c6cf2a74346df','46914f7d-fea9-4a37-9910-26e6b0aa58e0_rw_1200.png?h=011c859ba0fcfab7c42e9e01aa270fc0','5417381e-7911-40c2-b3d9-690e8948fe0b_rw_1920.png?h=faeffafb680f0f0b051471e1cd2b879e','276c70f3-14af-4cee-b7d2-0d6ca7bd5a88_rw_1920.png?h=e076a61a870865aa1b0bee9d5a29c485','d4f7d5a5-b3ea-4cb4-ba88-82d4bc1ff784_rw_1920.png?h=17625c8c35087dec9180427a7674537e','0557a07b-9a58-4676-9084-c0fd5215b740_rw_1920.png?h=eacd4f45c5e44fef35016fb04c621b4d','858467d0-a4b5-4464-82fc-a58bea232d65_rw_1920.png?h=fb46a424047335238bacf9d10cf4f44d','e2c1396a-f828-4edf-9fe6-bcd02cc4fd2d_rw_1200.png?h=dde9ba20867cf0792631f206d8bc37e7','b6f32ca8-4e33-467b-b12a-5b3c2d457c81_rw_1200.png?h=04b9e2d3f6d2ddb0ad6ff108da1db6ad'].map(f=>({cat:'design', title:'Social media poster', sub:'Social graphics', ...P(f)})),
+  ...['fdacc27b-0e5b-4aa5-ab30-60d1e00dc6e2_rw_3840.png?h=6985209295eda773e8e068cc3828fe51','82035f82-3572-4fe7-a33f-ac1c36ca2a5e_rw_1920.png?h=a6ae2466e3305cd7404102e8a2772898','a5029370-e902-416d-8fc9-673ea1dbad3c_rw_1920.jpg?h=0b07f1aedefbe07f893312677d50aab9'].map(f=>({cat:'design', title:'Poster', sub:'Print', ...P(f)})),
+  // illustration
+  ...['dc982184-0722-43a9-b09d-a529043b3659_rw_3840.png?h=71e1f746e16de725ddc6a1b5f9b37993','a5165151-7a6a-4add-b5e8-e7140fee6d21_rw_3840.png?h=dfee868af474d3d8853800337e80ef41','f4f24109-25db-41a2-a46b-e8acbd4b4460_rw_3840.png?h=27ab7f04d296d8bc38441be0625bf742','25a44c7f-4211-498f-9ee7-492b9fd98ff1_rw_3840.png?h=0d1643cac57b6a05d8f7f4f5ffc6217f'].map(f=>({cat:'art', title:'Illustration', sub:'Digital', ...P(f)})),
+  ...['7ba4dd66-8f94-4c8b-857d-96ed1dd2a7b0_rw_1200.png?h=a08ae3486fa619118b2d2e07aee58cf5','144a913c-01a7-4e6c-a352-05078f94867c_rw_1200.png?h=51b818f39fb8d7961befc2d98ffdb987','d99fe5ba-a8b8-41e8-ae5d-d9110fc9b1fd_rw_1200.png?h=47ebb94bf681a8ab41f17b5b82dd5abd','ffaed805-5e66-479f-89b0-ab246f2f28c7_rw_1200.png?h=9c5a6b6878b85b50a5e46cb2474f566a','d57f644b-6d80-46af-a3ec-3738734b05f1_rw_3840.png?h=4f7095a8c11141bfe037fc71ed50c96e','ee2af782-d13c-430e-95ee-4fb4166ee116_rw_1920.png?h=3cf8831cb1e4edd435613073b626a3d7','5b2af84d-3e37-4603-9b17-7e273d46466a_rw_1200.png?h=f56beff3a2d661d3e56edcc0585f0944','2b5ba187-9479-43d3-b03e-9f4c3b04e937_rw_3840.png?h=95340b811c4e334b34adaea59cc81eab','7c7882b8-fc1c-46b7-8797-09902d41c5c2_rw_1920.jpg?h=8c1efaba614a0f34ccc4a1afddb39bcf'].map(f=>({cat:'art', title:'Vector art', sub:'Illustrator', ...P(f)})),
+  ...['3ab80fce-3a7e-47bc-8289-0dc2c0e7b626_rw_1200.jpg?h=a32de1ffd0fbcd2ab7c0f9c8e7ef745e','faf1c1ad-b35a-4bb9-a587-37dd67af5697_rw_1920.png?h=e571c7046dcad0f60ad1751245130639','a7ac2b1c-3f17-43aa-8f06-ecdba59706e6_rw_1920.png?h=5f906d4654b0ec863e257f89d06c6208','d34c47f4-123e-41d5-9b56-68a241c03911_rw_1920.png?h=a6aa7b92eadca47079ee681f69a96065','84da3a3d-3218-47d5-95c6-899fcd9c571a_rw_1920.png?h=c0b0c09b006671c6f90c8771ec7d0224','f3839a09-ee95-4972-b569-e45b88415079_rw_3840.png?h=fe4ea93aa2e19695a3bcb43114821caf','b91b27f8-2484-4ecb-9511-4935b2ddb072_rw_3840.png?h=ee0588a85168a6715a813047cb3f603f','737cc9fd-e68c-4e6b-9b45-581d6b4e4198_rw_1200.png?h=04f966d293242df8c73c4048c86a5241','69a9962d-7a3d-4c8a-b37f-1b378ab4c907_rw_3840.png?h=fc3790f03dd56446d8ebd2e8c80cdc17','81a05fe0-05cd-456f-b3e0-d040c41d3fd0_rw_3840.png?h=5deed2567c61f442ba21b932a2788c1a','112261b6-aa4f-45e2-8ccb-be025eb8576e_rw_1920.png?h=ddd90f9f0e328b0cbf7a379f13e8bdb1','4e09e64e-a3b9-463a-93ab-64102c607294_rw_1920.png?h=85c1ec2f522d934e7c7cf0a37da4fcb5'].map(f=>({cat:'art', title:'Digital portrait', sub:'Photoshop', ...P(f)})),
+  ...['40a02b3c-9751-400f-9f81-6eaec087cbba_rw_1920.jpg?h=1058dfe472f6cb19646a80cdff35196b','5f29ade3-5aed-420c-b092-763e23cfc30d_rw_1920.jpg?h=3eb6b0047d14032982234896c11121a7','d3e8a218-82a0-483e-9eda-1bdf2f8d9e54_rw_1920.jpg?h=e36281fcae7673714dc7c34fd4bdac28','be37e5e7-7f54-40e3-9d6a-89f193ecca3d_rw_1920.jpg?h=ad867b7ad80bb856f90354af2493a86b','d04db929-b522-4f62-8b59-b9ccf277c56c_rw_1920.jpg?h=4bd648ad5cbdaa77eb28de64ab1919cd','2cfa22e9-50f7-4ff2-9df6-e664e0d18c54_rw_1920.png?h=f4a62dd5464d6d1dc379b66b409f6163','57ab9e10-3000-4c65-813c-a5ba6f23c63e_rw_1920.jpg?h=ce85c908a31c8ad7dd05f3552eeaed67','4e1a6bf8-96b8-497d-8fb6-e2ce93f4078a_rw_1920.jpg?h=9518cb95124ae698f19e86070456df90','63508c69-a40f-45b6-87ae-01f7f7685ea7_rw_1920.jpg?h=abe29d59041a10b3b4c1f57cb51c7c5e','85361a26-e191-4952-835b-cd3a98146a17_rw_1920.jpg?h=8436ee8198e30864153d1c91f6c790f8','9ac8a2ea-49c3-485a-8b0e-588250f0062b_rw_1920.png?h=e14094f99379ad7b85c56684bcbdb571'].map(f=>({cat:'art', title:'Traditional drawing', sub:'Pencil & ink', ...P(f)})),
+];
+const feat = {title:'Mitolohiya (2022)', embed:'https://www.youtube-nocookie.com/embed/cZzwMUAXH8I?autoplay=1', link:'https://www.youtube.com/watch?v=cZzwMUAXH8I'};
+
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const grid = document.getElementById('grid');
+grid.innerHTML = works.map((w,i) => {
+  const media = w.thumb
+    ? `<img src="${w.thumb}" alt="" loading="lazy">${w.embed ? '<span class="play"></span>' : ''}`
+    : `<div class="slate c${i%5}"><span class="mono">${esc(w.sub)}</span><b>${w.slate}</b></div><span class="play"></span>`;
+  return `<button type="button" class="item" data-i="${i}" data-cat="${w.cat}" aria-label="Open ${esc(w.title)}">
+    ${i%3===0 ? `<span class="tape ${['','t2','t3'][i%3]}"></span>` : ''}
+    <div class="thumb">${media}</div>
+    <div class="cap"><strong>${esc(w.title)}</strong><span>${esc(w.sub)}</span></div></button>`;
+}).join('');
+
+// filters
+document.querySelectorAll('.filters button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.filters button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  grid.querySelectorAll('.item').forEach(it => it.hidden = !(b.dataset.f === 'all' || it.dataset.cat === b.dataset.f));
+}));
+
+// lightbox
+const lb = document.getElementById('lb'), frame = document.getElementById('lb-frame');
+function open(w){
+  frame.style.aspectRatio = w.embed ? '16/9' : 'auto';
+  frame.innerHTML = w.embed
+    ? `<iframe src="${w.embed}" title="${esc(w.title)}" allow="autoplay; fullscreen" allowfullscreen></iframe>`
+    : `<img src="${w.full}" alt="${esc(w.title)}">`;
+  document.getElementById('lb-title').textContent = w.title;
+  document.getElementById('lb-link').href = w.link;
+  lb.showModal();
+}
+grid.addEventListener('click', e => { const b = e.target.closest('.item'); if (b) open(works[b.dataset.i]); });
+document.querySelector('[data-open="feat"]').addEventListener('click', () => open(feat));
+document.getElementById('lb-close').addEventListener('click', () => lb.close());
+lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+lb.addEventListener('close', () => frame.innerHTML = ''); // stops video playback
+</script>
+</body>
+</html>
