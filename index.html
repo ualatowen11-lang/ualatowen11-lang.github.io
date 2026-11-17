@@ -312,7 +312,7 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
     <div class="controls">
       <button type="button" class="cbtn" id="playbtn" aria-label="Pause">❚❚</button>
       <span class="time" aria-live="off"><span id="tcur">0:00</span> / <span id="tdur">0:55</span></span>
-      <div class="track" id="track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="54" aria-valuenow="0" aria-valuetext="0:00, Intro">
+      <div class="track" id="track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" aria-valuetext="0:00, Intro">
         <div class="buffered" id="tbuf"></div><div class="fill" id="tfill"></div><div class="knob" id="tknob"></div>
         <div class="hovertip" id="ttip" hidden></div>
       </div>
@@ -321,7 +321,7 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
     </div>
   </div>
     <div class="chapters" id="chapters" role="group" aria-label="Jump to a section of the reel"></div>
-    <p class="credit small">54 s, cut to the beat in After Effects. Music: "Chocolate Cookies", licensed.</p>
+    <p class="credit small">55 s, cut to the beat in After Effects. Music: "Chocolate Cookies", licensed.</p>
   </div>
 </header>
 <ul class="proofstrip" aria-label="Credentials">
@@ -335,8 +335,8 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
 
 <main>
 <section class="wrap" id="work" aria-labelledby="work-h">
-  <div class="head"><h2 id="work-h">Selected work</h2><span class="hand">grouped by the role you're hiring for</span></div>
-  <p class="lead">Four shelves, strongest pieces first. Videos play in place; images open full size.</p>
+  <div class="head"><h2 id="work-h">Portfolio</h2><span class="hand">selected projects</span></div>
+  <p class="lead">Selected projects in video editing, motion design, graphic design and illustration: films and trailers, title systems, posters, badge sets and portraits.</p>
   <div class="filters" id="shelfnav" role="navigation" aria-label="Jump to a type of work"></div>
   <div id="shelves"></div>
 </section>
@@ -625,7 +625,7 @@ lb.addEventListener('close', () => { frame.innerHTML = ''; opener?.focus(); }); 
 // reel player: muted autoplay preview, custom timeline with chapter markers, keyboard support
 const reel = $('#reelvid'), player = $('#player'), track = $('#track'), fill = $('#tfill'), knob = $('#tknob'), buf = $('#tbuf'), tip = $('#ttip');
 const playBtn = $('#playbtn'), muteBtn = $('#mutebtn'), bigPlay = $('#bigplay'), chapBox = $('#chapters');
-const CHAPTERS = [{"t": 0, "label": "Intro"}, {"t": 4.83, "label": "M-FLIX"}, {"t": 11.54, "label": "Masterclass"}, {"t": 14.88, "label": "Layout library"}, {"t": 22.67, "label": "Mitolohiya"}, {"t": 29.92, "label": "Event edits"}, {"t": 36.62, "label": "VFX and 3D"}, {"t": 43.29, "label": "Grow"}, {"t": 46.67, "label": "Contact"}];
+const CHAPTERS = [{"t": 0, "label": "Intro"}, {"t": 4.83, "label": "M-FLIX"}, {"t": 11.54, "label": "Masterclass"}, {"t": 14.88, "label": "Layout library"}, {"t": 20.46, "label": "Mitolohiya"}, {"t": 27.71, "label": "Illustration & design"}, {"t": 36.62, "label": "Event edits"}, {"t": 41.08, "label": "VFX and 3D"}, {"t": 44.42, "label": "Grow"}, {"t": 47.75, "label": "Contact"}];
 const fmt = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 const dur = () => reel.duration || CHAPTERS[CHAPTERS.length - 1].t + 7.5;
 const chapterAt = t => CHAPTERS.reduce((a, c) => t >= c.t ? c : a, CHAPTERS[0]);
