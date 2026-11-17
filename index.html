@@ -230,10 +230,9 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
 @keyframes lbIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}}
 /* one hero entrance per visit */
-.hero .hi,.hero .namebox,.hero .tagline,.hero .status,.hero .btns,.hero .facts{animation:rise 700ms var(--ease-out) both}
-.hero .namebox{animation-delay:60ms}.hero .tagline{animation-delay:140ms}.hero .status{animation-delay:200ms}.hero .btns{animation-delay:250ms}.hero .facts{animation-delay:320ms}
+.hero-copy>*,.hero-reel{animation:rise 700ms var(--ease-out) both}
+.hero-copy>:nth-child(2){animation-delay:60ms}.hero-copy>:nth-child(3){animation-delay:120ms}.hero-copy>:nth-child(4){animation-delay:180ms}.hero-copy>:nth-child(5){animation-delay:220ms}.hero-reel{animation-delay:160ms}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}}
-.hero .namebox{animation-name:riseTilt}
 @keyframes riseTilt{from{opacity:0;transform:translateY(10px) rotate(-1.2deg)}to{transform:rotate(-1.2deg)}}
 .lb{background:var(--card);padding:12px;box-shadow:var(--shadow);border-radius:8px}
 .lb .frame{aspect-ratio:16/9;background:#000;display:grid;place-items:center}
@@ -246,6 +245,34 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;transition:transform .25s;z-index:200}
 .toast.show{transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-name:fadeIn!important;animation-duration:200ms!important}.btn,.item,.mini,.cbtn,.knob{transition-property:opacity,background-color,box-shadow!important}}
+/* ---------- HR-first hero: copy left, live reel right ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.2fr);gap:48px;align-items:center;text-align:left;padding:46px 44px 40px;transform:none;max-width:1280px}
+.hero::before{content:none}   /* the tilted back sheet drew over the front sheet; removed */
+.who{display:flex;align-items:center;gap:12px;margin:0 0 22px;font-size:15px;color:var(--muted);line-height:1.35}
+.who b{display:block;color:var(--ink);font-size:18px;font-family:var(--display);font-weight:800}
+.who .avatar{width:56px;height:56px;border:3px solid var(--card);transform:none;box-shadow:var(--shadow)}
+.hero h1{font-family:var(--display);font-weight:900;font-size:clamp(36px,4.2vw,58px);line-height:1.04;letter-spacing:-.03em;margin:0 0 18px;color:var(--ink)}
+.hero h1 mark{background:linear-gradient(transparent 14%,var(--mustard) 14%,var(--mustard) 90%,transparent 90%);color:var(--tomato);padding:0 .06em}
+.proof{font-size:18px;color:var(--muted);max-width:46ch;margin:0 0 26px}
+.hero .btns{justify-content:flex-start;margin:0}
+.avail{display:flex;align-items:center;gap:8px;margin:20px 0 0;font-weight:600;font-size:15px;color:var(--ink)}
+.hero-reel{position:relative}
+.hero-reel .screen{max-width:none}
+.hero-reel .sel{position:absolute;left:-14px;right:-14px;top:-14px;height:calc(var(--screen-h,100%) + 28px);outline:3px solid var(--tomato);pointer-events:none;z-index:1}
+.hero-reel .sel .hd{position:absolute;width:18px;height:18px;background:var(--card);border:2px solid var(--tomato)}
+.hero-reel .sel .hd:nth-of-type(1){left:-10px;top:-10px}.hero-reel .sel .hd:nth-of-type(2){right:-10px;top:-10px}.hero-reel .sel .hd:nth-of-type(3){right:-10px;bottom:-10px}.hero-reel .sel .hd:nth-of-type(4){left:-10px;bottom:-10px}
+.hero-reel .sel .disc{position:absolute;right:-30px;top:-30px;width:52px;height:52px;border-radius:50%;background:var(--card);box-shadow:var(--shadow);display:grid;place-items:center;color:var(--tomato)}
+.hero-reel .sel .disc svg{width:24px;height:24px}
+.hero-reel .chapters{justify-content:flex-start;margin-top:26px;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:6px;mask-image:linear-gradient(90deg,#000 88%,transparent)}
+.hero-reel .chapters button{flex:none}
+.hero-reel .bigplay{display:none}   /* the hero's own "Play the reel with sound" button does this */
+.hero-reel .chapters button{font-size:13px;padding:0 11px}
+.hero-reel .credit{text-align:left;margin-top:10px}
+.proofstrip{max-width:1280px;margin:24px auto 0;padding:0 20px;list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.proofstrip li{background:var(--card);color:var(--muted);font-size:14px;padding:8px 14px;border-radius:999px;box-shadow:var(--shadow)}
+.proofstrip b{color:var(--tomato);font-weight:700;margin-right:4px}
+@media(max-width:960px){.hero{grid-template-columns:minmax(0,1fr);padding:30px 20px 26px;gap:34px}.hero h1{font-size:clamp(32px,8.6vw,46px)}}
+@media(max-width:640px){.hero-reel .sel{left:-8px;right:-8px;top:-8px;height:calc(var(--screen-h,100%) + 16px)}.hero-reel .sel .disc{display:none}.proofstrip li{font-size:13px}}
 </style>
 </head>
 <body>
@@ -254,8 +281,8 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
   <div class="navbar">
     <a class="logo" href="#top" aria-label="Owen Ualat, back to top">OU</a>
     <a href="#reel">Reel</a>
-    <a href="#cases" class="hide-sm">Case studies</a>
     <a href="#work">Work</a>
+    <a href="#cases" class="hide-sm">Case studies</a>
     <a href="#about" class="hide-sm">About</a>
     <span class="spacer"></span>
     <a href="resume.pdf" download="Owen-Ualat-Resume.pdf">Résumé</a>
@@ -265,37 +292,19 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
 
 <div class="mat">
 <header class="wrap hero" id="top">
-  <p class="hi"><img class="avatar" src="assets/owen.webp" alt="" width="52" height="52">hi, my name is</p>
-  <div class="namebox">
-    <h1>Owen Ualat</h1>
-    <i class="hd"></i><i class="hd"></i><i class="hd"></i><i class="hd"></i>
-    <span class="disc"><svg viewBox="-10 -10 20 20" aria-hidden="true"><path fill="currentColor" d="M0-10C1 -3 3 -1 10 0C3 1 1 3 0 10C-1 3 -3 1 -10 0C-3 -1 -1 -3 0-10Z"/></svg></span>
-    <span class="note n1">video editor</span>
-    <span class="note n2">motion designer</span>
-    <span class="note n3">Quezon City, PH</span>
+  <div class="hero-copy">
+    <p class="who"><img class="avatar" src="assets/owen.webp" alt="" width="56" height="56"><span><b>Owen Ualat</b>Video editor and motion designer · Quezon City, PH</span></p>
+    <h1>I turn lectures and events into videos <mark>people actually finish.</mark></h1>
+    <p class="proof">4+ years making educational video at FEU Tech: course trailers, title systems and a 63-layout motion library in After Effects. Now leading the Educational Media Unit.</p>
+    <div class="btns">
+      <button class="btn dark" type="button" id="heroplay">▶ Play the reel with sound</button>
+      <a class="btn" href="resume.pdf" download="Owen-Ualat-Resume.pdf">Résumé (PDF)</a>
+    </div>
+    <p class="avail"><span class="dot" aria-hidden="true"></span>Available for full-time and freelance roles</p>
   </div>
-  <span class="sparkle" style="left:7%;top:58%"><svg viewBox="-10 -10 20 20" aria-hidden="true"><path fill="currentColor" d="M0-10C1 -3 3 -1 10 0C3 1 1 3 0 10C-1 3 -3 1 -10 0C-3 -1 -1 -3 0-10Z"/></svg></span><span class="sparkle" style="right:8%;top:16%;width:18px;height:18px"><svg viewBox="-10 -10 20 20" aria-hidden="true"><path fill="currentColor" d="M0-10C1 -3 3 -1 10 0C3 1 1 3 0 10C-1 3 -3 1 -10 0C-3 -1 -1 -3 0-10Z"/></svg></span>
-  <p class="tagline">I edit, animate, and design <mark>learning content people actually want to watch.</mark></p>
-  <span class="status"><span class="dot" aria-hidden="true"></span>Open to full-time and freelance roles</span>
-  <div class="btns">
-    <a class="btn dark" href="#reel">▶ Watch the 55s reel</a>
-    <a class="btn" href="resume.pdf" download="Owen-Ualat-Resume.pdf">Download résumé (PDF)</a>
-    <button class="btn" type="button" data-copy="ualat.owen11@gmail.com">Copy my email</button>
-  </div>
-  <ul class="facts" aria-label="Quick facts">
-    <li><b>4+ years</b>editing and animating in-house at FEU Tech</li>
-    <li><b>Team lead</b>Educational Media Unit, since Nov 2025</li>
-    <li><b>Adobe certified</b>After Effects: VFX and motion graphics</li>
-    <li><b>Cum laude</b>BS Entertainment and Multimedia Computing</li>
-  </ul>
-</header>
-</div>
-
-<main>
-<section class="wrap" id="reel" aria-labelledby="reel-h">
-  <div class="head"><h2 id="reel-h">Showreel</h2><span class="hand">55 seconds, cut to the beat in After Effects</span></div>
+  <div class="hero-reel" id="reel" aria-label="Showreel">
+    <div class="sel" aria-hidden="true"><i class="hd"></i><i class="hd"></i><i class="hd"></i><i class="hd"></i><span class="disc"><svg viewBox="-10 -10 20 20" aria-hidden="true"><path fill="currentColor" d="M0-10C1 -3 3 -1 10 0C3 1 1 3 0 10C-1 3 -3 1 -10 0C-3 -1 -1 -3 0-10Z"/></svg></span></div>
   <div class="screen" id="player">
-    <span class="tape t3"></span>
     <div class="vwrap">
       <video id="reelvid" src="assets/showreel.mp4" poster="assets/showreel-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Showreel of selected editing, motion graphics and layout design"></video>
       <button type="button" class="bigplay" id="bigplay" aria-label="Play with sound">▶ Play with sound</button>
@@ -311,8 +320,25 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
       <button type="button" class="cbtn" id="fsbtn" aria-label="Full screen">⤢</button>
     </div>
   </div>
-  <div class="chapters" id="chapters" role="group" aria-label="Jump to a section of the reel"></div>
-  <p class="credit small">Every title, lower third and transition was built in After Effects. Music: "Chocolate Cookies", licensed.</p>
+    <div class="chapters" id="chapters" role="group" aria-label="Jump to a section of the reel"></div>
+    <p class="credit small">55 s, cut to the beat in After Effects. Music: "Chocolate Cookies", licensed.</p>
+  </div>
+</header>
+<ul class="proofstrip" aria-label="Credentials">
+  <li><b>FEU Tech</b> Educational Media Unit Lead</li>
+  <li><b>Vofsi Visuals</b> video editor</li>
+  <li><b>Adobe Certified</b> After Effects</li>
+  <li><b>Animahenasyon</b> Best Regional Entry</li>
+  <li><b>IEEE</b> published, 2022</li>
+</ul>
+</div>
+
+<main>
+<section class="wrap" id="work" aria-labelledby="work-h">
+  <div class="head"><h2 id="work-h">Selected work</h2><span class="hand">grouped by the role you're hiring for</span></div>
+  <p class="lead">Four shelves, strongest pieces first. Videos play in place; images open full size.</p>
+  <div class="filters" id="shelfnav" role="navigation" aria-label="Jump to a type of work"></div>
+  <div id="shelves"></div>
 </section>
 
 <section class="wrap" id="cases" aria-labelledby="cases-h">
@@ -372,13 +398,6 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
       </div>
     </article>
   </div>
-</section>
-
-<section class="wrap" id="work" aria-labelledby="work-h">
-  <div class="head"><h2 id="work-h">Selected work</h2><span class="hand">grouped by the role you're hiring for</span></div>
-  <p class="lead">Four shelves, strongest pieces first. Videos play in place; images open full size.</p>
-  <div class="filters" id="shelfnav" role="navigation" aria-label="Jump to a type of work"></div>
-  <div id="shelves"></div>
 </section>
 
 <section class="wrap" id="about" aria-labelledby="about-h">
@@ -630,6 +649,10 @@ function setMuted(m){ reel.muted = m; muteBtn.setAttribute('aria-pressed', !m); 
 muteBtn.addEventListener('click', () => setMuted(!reel.muted));
 bigPlay.addEventListener('click', () => { setMuted(false); reel.currentTime = 0; reel.play(); });
 reel.addEventListener('click', toggle);
+$('#heroplay').addEventListener('click', () => bigPlay.click());
+// the selection frame wraps only the player (not the chapter chips below it)
+const fitSel = () => $('#reel').style.setProperty('--screen-h', player.offsetHeight + 'px');
+new ResizeObserver(fitSel).observe(player); fitSel();
 $('#fsbtn').addEventListener('click', () => document.fullscreenElement ? document.exitFullscreen() : player.requestFullscreen?.());
 function seek(t){ reel.currentTime = Math.min(Math.max(0, t), dur() - 0.05); paint(); }
 const posToTime = e => { const r = track.getBoundingClientRect(); return Math.min(Math.max(0, (e.clientX - r.left) / r.width), 1) * dur(); };
