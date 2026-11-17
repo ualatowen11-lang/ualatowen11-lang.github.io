@@ -21,7 +21,11 @@
   --tomato:#e5533a; --mustard:#f2c14e; --mint:#bfe6dd; --pink:#f7c4d6; --sky:#c9d8f6; --cobalt:#2f56cf; --go:#1f9d55;
   --shadow:0 1px 0 rgba(0,0,0,.04),0 12px 26px -14px rgba(20,20,20,.35);
   --hand:'Caveat',cursive;
+  --ease-out:cubic-bezier(.23,1,.32,1); --ease-in-out:cubic-bezier(.77,0,.175,1);
 }
+::selection{background:var(--mustard);color:var(--ink)}
+h1,h2,h3{text-wrap:balance}
+p,dd,li{text-wrap:pretty}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px;overflow-x:clip} /* tilted cards and notes must never cause sideways scroll */
 body{margin:0;color:var(--ink);font:400 17px/1.6 'Bricolage Grotesque',system-ui,sans-serif;background-color:var(--bg);
@@ -47,9 +51,9 @@ nav{position:sticky;top:12px;z-index:50;margin:12px auto 0;max-width:1120px;padd
 @media(max-width:700px){.navbar .hide-sm{display:none}}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;padding:12px 18px;border:1.5px solid var(--ink);border-radius:10px;background:var(--card);box-shadow:3px 3px 0 var(--ink);cursor:pointer;transition:transform .15s,box-shadow .15s}
-.btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
-.btn:active{transform:none;box-shadow:1px 1px 0 var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;text-decoration:none;font-weight:700;padding:11px 18px;border:1.5px solid var(--ink);border-radius:10px;background:var(--card);box-shadow:3px 3px 0 var(--ink);cursor:pointer;transition:transform 150ms var(--ease-out),box-shadow 150ms var(--ease-out)}
+@media(hover:hover) and (pointer:fine){.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}}
+.btn:active{transform:translate(2px,2px) scale(.98);box-shadow:1px 1px 0 var(--ink);transition-duration:90ms}
 .btn.dark{background:var(--ink);color:#fff}
 
 /* hero */
@@ -87,18 +91,36 @@ section{padding:60px 0}
 .tape{position:absolute;width:96px;height:26px;background:rgba(242,193,78,.8);transform:rotate(-4deg);top:-12px;left:42%;box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .tape.t2{background:rgba(160,198,240,.75)}.tape.t3{background:rgba(247,170,198,.7)}
 
-/* reel monitor */
-.screen{position:relative;background:var(--ink);padding:12px 12px 52px;border-radius:16px;box-shadow:var(--shadow);max-width:980px;margin:0 auto}
-.screen video{width:100%;aspect-ratio:16/9;border-radius:6px;background:#000}
-.screen .bar{position:absolute;left:18px;right:12px;bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:#cfcfca;font-size:14px}
-.screen .rec{display:inline-flex;align-items:center;gap:8px}
-.screen .rec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tomato)}
-.screen .ctrl{display:flex;gap:8px}
-.screen .ctrl button{font-weight:700;font-size:14px;background:transparent;color:#fff;border:1px solid #5a5a55;border-radius:7px;padding:5px 12px;cursor:pointer}
-.screen .ctrl button:hover{background:#2a2a28}
-.screen .ctrl button[aria-pressed="true"]{background:var(--mustard);color:var(--ink);border-color:var(--mustard)}
-.screen .tape{left:12%}
+/* reel monitor + custom player */
+.screen{position:relative;background:var(--ink);padding:12px;border-radius:16px;box-shadow:var(--shadow);max-width:980px;margin:0 auto}
+.screen .tape{left:12%;z-index:2}
+.vwrap{position:relative}
+.vwrap video{width:100%;aspect-ratio:16/9;border-radius:6px;background:#000;cursor:pointer}
+.bigplay{position:absolute;right:14px;top:14px;font-weight:700;font-size:15px;background:var(--card);color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:10px 16px;min-height:44px;cursor:pointer;box-shadow:2px 2px 0 var(--ink);transition:transform 160ms var(--ease-out),opacity 200ms var(--ease-out)}
+.bigplay[hidden]{display:none}
+.controls{display:flex;align-items:center;gap:10px;padding:10px 4px 2px;color:#e8e8e4}
+.cbtn{min-width:44px;min-height:44px;background:transparent;color:#fff;border:1px solid #4a4a46;border-radius:8px;padding:0 12px;font-weight:700;font-size:14px;cursor:pointer;transition:background-color 150ms var(--ease-out),transform 120ms var(--ease-out)}
+.cbtn:active{transform:scale(.96)}
+.cbtn[aria-pressed="true"]{background:var(--mustard);color:var(--ink);border-color:var(--mustard)}
+.time{font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap;color:#cfcfca;min-width:86px}
+.track{position:relative;flex:1;height:44px;cursor:pointer;touch-action:none}
+.track::before{content:"";position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:#3a3a37}
+.buffered,.fill{position:absolute;left:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;width:0}
+.buffered{background:#5a5a55}.fill{background:var(--tomato)}
+.knob{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4);left:0;transition:transform 120ms var(--ease-out)}
+.track:hover .knob,.track:focus-visible .knob,.track.drag .knob{transform:scale(1.25)}
+.track .mark{position:absolute;top:50%;width:3px;height:14px;margin:-7px 0 0 -1.5px;background:#f4f4f1;border-radius:2px;opacity:.85;pointer-events:none}
+.hovertip{position:absolute;bottom:40px;transform:translateX(-50%);background:var(--card);color:var(--ink);font-size:13px;font-weight:700;padding:4px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;font-variant-numeric:tabular-nums}
+.chapters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:980px;margin:14px auto 0}
+.chapters button{font-weight:700;font-size:14px;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);cursor:pointer;transition:background-color 150ms var(--ease-out),transform 120ms var(--ease-out)}
+.chapters button span{font-weight:500;color:var(--muted);margin-left:6px;font-variant-numeric:tabular-nums}
+.chapters button[aria-current="true"]{background:var(--ink);color:#fff}
+.chapters button[aria-current="true"] span{color:#cfcfca}
+.chapters button:active{transform:scale(.97)}
+.screen:fullscreen{padding:0;border-radius:0;display:flex;flex-direction:column;justify-content:center;background:#000}
+.screen:fullscreen .tape{display:none}
 .credit{text-align:center;margin-top:12px}
+@media(max-width:640px){.time{min-width:0;font-size:13px}.controls{gap:6px}#fsbtn{display:none}}
 
 /* case studies */
 .cases{display:grid;gap:28px}
@@ -117,14 +139,16 @@ section{padding:60px 0}
 
 /* work grid */
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
-.filters button{font-weight:700;font-size:15px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);cursor:pointer}
+.filters button{font-weight:700;font-size:15px;min-height:44px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);cursor:pointer}
 .filters button span{font-weight:500;color:var(--muted);margin-left:4px}
 .filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .filters button[aria-pressed="true"] span{color:#cfcfca}
 .grid{columns:3 280px;column-gap:24px}
-.item{break-inside:avoid;margin:0 0 28px;display:block;width:100%;text-align:left;border:0;cursor:pointer;background:var(--card);padding:10px 10px 14px;box-shadow:var(--shadow);position:relative;transition:transform .2s ease}
+.item{break-inside:avoid;margin:0 0 28px;display:block;width:100%;text-align:left;border:0;cursor:pointer;background:var(--card);padding:10px 10px 14px;box-shadow:var(--shadow);position:relative;transition:transform 220ms var(--ease-out)}
 .item:nth-child(4n+1){transform:rotate(-1deg)}.item:nth-child(4n+2){transform:rotate(.8deg)}.item:nth-child(4n+3){transform:rotate(-.4deg)}.item:nth-child(4n){transform:rotate(1.2deg)}
-.item:hover,.item:focus-visible{transform:rotate(0) translateY(-4px)}
+@media(hover:hover) and (pointer:fine){.item:hover{transform:rotate(0) translateY(-2px)}.item:hover .thumb img{transform:scale(1.03)}}
+.item:focus-visible{transform:rotate(0)}
+.item .thumb img{transition:transform 300ms var(--ease-out)}
 .item[hidden]{display:none}
 .item .thumb{position:relative;background:#e9e9e4;overflow:hidden}
 .item .thumb img{width:100%;height:auto;min-height:120px;object-fit:cover}
@@ -176,12 +200,23 @@ section{padding:60px 0}
 .addr .row a{text-decoration:none;font-size:19px}
 .addr .row a:hover{color:var(--tomato)}
 .addr .label{display:block;color:var(--muted);font-size:13px;font-weight:500}
-.mini{font-weight:700;font-size:13px;border:1.5px solid var(--ink);background:var(--card);border-radius:7px;padding:4px 10px;cursor:pointer}
+.mini{font-weight:700;font-size:14px;min-height:44px;min-width:44px;border:1.5px solid var(--ink);background:var(--card);border-radius:8px;padding:0 12px;cursor:pointer;transition:transform 120ms var(--ease-out)}
+.mini:active{transform:scale(.96)}
 footer{text-align:center;padding:30px 0 50px;color:var(--muted);font-size:14px}
 
 /* lightbox */
 dialog{border:0;padding:0;background:transparent;max-width:min(1100px,94vw);width:100%}
 dialog::backdrop{background:rgba(15,15,15,.85)}
+dialog[open] .lb{animation:lbIn 240ms var(--ease-out)}
+dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
+@keyframes lbIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}}
+/* one hero entrance per visit */
+.hero .hi,.hero .namebox,.hero .tagline,.hero .status,.hero .btns,.hero .facts{animation:rise 700ms var(--ease-out) both}
+.hero .namebox{animation-delay:60ms}.hero .tagline{animation-delay:140ms}.hero .status{animation-delay:200ms}.hero .btns{animation-delay:250ms}.hero .facts{animation-delay:320ms}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.hero .namebox{animation-name:riseTilt}
+@keyframes riseTilt{from{opacity:0;transform:translateY(10px) rotate(-1.2deg)}to{transform:rotate(-1.2deg)}}
 .lb{background:var(--card);padding:12px;box-shadow:var(--shadow);border-radius:8px}
 .lb .frame{aspect-ratio:16/9;background:#000;display:grid;place-items:center}
 .lb iframe{width:100%;height:100%;border:0}
@@ -192,7 +227,7 @@ dialog::backdrop{background:rgba(15,15,15,.85)}
 /* toast */
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;transition:transform .25s;z-index:200}
 .toast.show{transform:translate(-50%,0)}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-name:fadeIn!important;animation-duration:200ms!important}.btn,.item,.mini,.cbtn,.knob{transition-property:opacity,background-color,box-shadow!important}}
 </style>
 </head>
 <body>
@@ -221,7 +256,7 @@ dialog::backdrop{background:rgba(15,15,15,.85)}
   <p class="tagline">I edit, animate, and design <mark>learning content people actually want to watch.</mark></p>
   <span class="status"><span class="dot" aria-hidden="true"></span>Open to full-time and freelance roles</span>
   <div class="btns">
-    <a class="btn dark" href="#reel">▶ Watch the 50s reel</a>
+    <a class="btn dark" href="#reel">▶ Watch the 55s reel</a>
     <a class="btn" href="resume.pdf" download="Owen-Ualat-Resume.pdf">Download résumé (PDF)</a>
     <button class="btn" type="button" data-copy="ualat.owen11@gmail.com">Copy my email</button>
   </div>
@@ -235,14 +270,26 @@ dialog::backdrop{background:rgba(15,15,15,.85)}
 
 <main>
 <section class="wrap" id="reel" aria-labelledby="reel-h">
-  <div class="head"><h2 id="reel-h">Showreel</h2><span class="hand">50 seconds, cut to the beat</span></div>
-  <div class="screen">
+  <div class="head"><h2 id="reel-h">Showreel</h2><span class="hand">55 seconds, cut to the beat in After Effects</span></div>
+  <div class="screen" id="player">
     <span class="tape t3"></span>
-    <video id="reelvid" src="assets/showreel.mp4" poster="assets/showreel-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Showreel of selected editing, motion graphics and layout design"></video>
-    <div class="bar"><span class="rec">Showreel 2026</span>
-      <span class="ctrl"><button type="button" id="soundbtn" aria-pressed="false">Sound on</button><button type="button" id="pausebtn">Pause</button></span></div>
+    <div class="vwrap">
+      <video id="reelvid" src="assets/showreel.mp4" poster="assets/showreel-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Showreel of selected editing, motion graphics and layout design"></video>
+      <button type="button" class="bigplay" id="bigplay" aria-label="Play with sound">▶ Play with sound</button>
+    </div>
+    <div class="controls">
+      <button type="button" class="cbtn" id="playbtn" aria-label="Pause">❚❚</button>
+      <span class="time" aria-live="off"><span id="tcur">0:00</span> / <span id="tdur">0:55</span></span>
+      <div class="track" id="track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" aria-valuetext="0:00, Intro">
+        <div class="buffered" id="tbuf"></div><div class="fill" id="tfill"></div><div class="knob" id="tknob"></div>
+        <div class="hovertip" id="ttip" hidden></div>
+      </div>
+      <button type="button" class="cbtn" id="mutebtn" aria-pressed="false">Sound on</button>
+      <button type="button" class="cbtn" id="fsbtn" aria-label="Full screen">⤢</button>
+    </div>
   </div>
-  <p class="credit small">Features M-FLIX, the COE0011 layout library, the Masterclass title system and the Grow series. Music: "Chocolate Cookies", licensed.</p>
+  <div class="chapters" id="chapters" role="group" aria-label="Jump to a section of the reel"></div>
+  <p class="credit small">Every title, lower third and transition was built in After Effects. Music: "Chocolate Cookies", licensed.</p>
 </section>
 
 <section class="wrap" id="cases" aria-labelledby="cases-h">
@@ -263,7 +310,7 @@ dialog::backdrop{background:rgba(15,15,15,.85)}
           <dt>I made</dt><dd>The course trailer, the platform-style UI animation, module title cards, the Masterclass title animation, and lesson layouts that pair the instructor with archival-style text cards.</dd>
           <dt>Tools</dt><dd>Premiere Pro, After Effects</dd>
         </dl>
-        <button class="btn" type="button" data-play="reel">Watch it in the reel</button>
+        <button class="btn" type="button" data-play="reel" data-at="8.21">Watch it in the reel</button>
       </div>
     </article>
     <article class="case">
@@ -281,7 +328,7 @@ dialog::backdrop{background:rgba(15,15,15,.85)}
           <dt>I made</dt><dd>14 layout families with 63 animated variants: definition, formula, worked example, chart, table, Venn, tree, procedure steps, bento split, lower thirds and more, each with its own build-in animation.</dd>
           <dt>Tools</dt><dd>After Effects</dd>
         </dl>
-        <button class="btn" type="button" data-play="reel" data-at="8.8">See them animate</button>
+        <button class="btn" type="button" data-play="reel" data-at="18.21">See them animate</button>
       </div>
     </article>
     <article class="case">
@@ -518,23 +565,60 @@ lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
 lb.addEventListener('keydown', e => { if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
 lb.addEventListener('close', () => { frame.innerHTML = ''; opener?.focus(); }); // clearing the frame stops playback
 
-// reel: autoplays muted (browsers require it); visitors can turn sound on or pause
-const reel = $('#reelvid'), soundBtn = $('#soundbtn'), pauseBtn = $('#pausebtn');
-soundBtn.addEventListener('click', () => {
-  reel.muted = !reel.muted;
-  if (!reel.muted) { reel.currentTime = 0; reel.play(); }
-  soundBtn.setAttribute('aria-pressed', !reel.muted);
-  soundBtn.textContent = reel.muted ? 'Sound on' : 'Sound off';
+// reel player: muted autoplay preview, custom timeline with chapter markers, keyboard support
+const reel = $('#reelvid'), player = $('#player'), track = $('#track'), fill = $('#tfill'), knob = $('#tknob'), buf = $('#tbuf'), tip = $('#ttip');
+const playBtn = $('#playbtn'), muteBtn = $('#mutebtn'), bigPlay = $('#bigplay'), chapBox = $('#chapters');
+const CHAPTERS = [{"t": 0, "label": "Intro"}, {"t": 8.21, "label": "M-FLIX"}, {"t": 14.88, "label": "Masterclass"}, {"t": 18.21, "label": "Layout library"}, {"t": 26.04, "label": "Mitolohiya"}, {"t": 30.5, "label": "Event edits"}, {"t": 37.17, "label": "VFX and 3D"}, {"t": 43.88, "label": "Grow"}, {"t": 47.21, "label": "Contact"}];
+const fmt = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+const dur = () => reel.duration || CHAPTERS[CHAPTERS.length - 1].t + 7.5;
+const chapterAt = t => CHAPTERS.reduce((a, c) => t >= c.t ? c : a, CHAPTERS[0]);
+chapBox.innerHTML = CHAPTERS.map((c, i) => `<button type="button" data-t="${c.t}">${c.label}<span>${fmt(c.t)}</span></button>`).join('');
+function marks(){ track.querySelectorAll('.mark').forEach(m => m.remove()); CHAPTERS.slice(1).forEach(c => { const m = document.createElement('span'); m.className = 'mark'; m.style.left = (c.t / dur() * 100) + '%'; track.appendChild(m); }); }
+function paint(){
+  const t = reel.currentTime, p = t / dur() * 100;
+  fill.style.width = p + '%'; knob.style.left = p + '%';
+  $('#tcur').textContent = fmt(t);
+  const c = chapterAt(t);
+  track.setAttribute('aria-valuenow', Math.round(t)); track.setAttribute('aria-valuetext', fmt(t) + ', ' + c.label);
+  chapBox.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', +b.dataset.t === c.t));
+  if (reel.buffered.length) buf.style.width = (reel.buffered.end(reel.buffered.length - 1) / dur() * 100) + '%';
+}
+reel.addEventListener('loadedmetadata', () => { $('#tdur').textContent = fmt(reel.duration); track.setAttribute('aria-valuemax', Math.round(reel.duration)); marks(); paint(); });
+reel.addEventListener('timeupdate', paint); reel.addEventListener('progress', paint);
+reel.addEventListener('play', () => { playBtn.textContent = '❚❚'; playBtn.setAttribute('aria-label', 'Pause'); });
+reel.addEventListener('pause', () => { playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Play'); });
+const toggle = () => reel.paused ? reel.play() : reel.pause();
+playBtn.addEventListener('click', toggle);
+function setMuted(m){ reel.muted = m; muteBtn.setAttribute('aria-pressed', !m); muteBtn.textContent = m ? 'Sound on' : 'Sound off'; bigPlay.hidden = !m; }
+muteBtn.addEventListener('click', () => setMuted(!reel.muted));
+bigPlay.addEventListener('click', () => { setMuted(false); reel.currentTime = 0; reel.play(); });
+reel.addEventListener('click', toggle);
+$('#fsbtn').addEventListener('click', () => document.fullscreenElement ? document.exitFullscreen() : player.requestFullscreen?.());
+function seek(t){ reel.currentTime = Math.min(Math.max(0, t), dur() - 0.05); paint(); }
+const posToTime = e => { const r = track.getBoundingClientRect(); return Math.min(Math.max(0, (e.clientX - r.left) / r.width), 1) * dur(); };
+track.addEventListener('pointerdown', e => { track.setPointerCapture(e.pointerId); track.classList.add('drag'); seek(posToTime(e)); });
+track.addEventListener('pointermove', e => {
+  const t = posToTime(e), r = track.getBoundingClientRect();
+  tip.hidden = false; tip.style.left = ((e.clientX - r.left) / r.width * 100) + '%'; tip.textContent = fmt(t) + ' · ' + chapterAt(t).label;
+  if (track.classList.contains('drag')) seek(t);
 });
-pauseBtn.addEventListener('click', () => reel.paused ? reel.play() : reel.pause());
-reel.addEventListener('play', () => pauseBtn.textContent = 'Pause');
-reel.addEventListener('pause', () => pauseBtn.textContent = 'Play');
-if (matchMedia('(prefers-reduced-motion: reduce)').matches) reel.pause();
-// case-study buttons jump to the reel, optionally to the moment that shows that work
+track.addEventListener('pointerup', () => track.classList.remove('drag'));
+track.addEventListener('pointerleave', () => { tip.hidden = true; });
+track.addEventListener('keydown', e => {
+  const k = e.key, t = reel.currentTime;
+  if (k === 'ArrowRight' || k === 'ArrowUp') seek(t + 5); else if (k === 'ArrowLeft' || k === 'ArrowDown') seek(t - 5);
+  else if (k === 'Home') seek(0); else if (k === 'End') seek(dur());
+  else if (k === 'PageDown') { const n = CHAPTERS.find(c => c.t > t + .5); if (n) seek(n.t); }
+  else if (k === 'PageUp') { const c = chapterAt(t - 1); seek(c.t); }
+  else if (k === ' ' || k === 'k') toggle(); else return;
+  e.preventDefault();
+});
+chapBox.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; seek(+b.dataset.t); reel.play(); });
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) { reel.removeAttribute('autoplay'); reel.pause(); }
+// case-study buttons jump to the moment in the reel that shows that work
 document.querySelectorAll('[data-play]').forEach(b => b.addEventListener('click', () => {
-  $('#reel').scrollIntoView({behavior: 'smooth'});
-  if (b.dataset.at) reel.currentTime = +b.dataset.at;
-  reel.play();
+  $('#reel').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  seek(+(b.dataset.at || 0)); reel.play();
 }));
 
 // highlight the nav link for the section on screen
