@@ -151,25 +151,30 @@ section{padding:60px 0}
 .case dd{margin:0}
 
 /* work grid */
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
-.filters button{font-weight:700;font-size:15px;min-height:44px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);cursor:pointer}
-.filters button span{font-weight:500;color:var(--muted);margin-left:4px}
-.filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
-.filters button[aria-pressed="true"] span{color:#cfcfca}
-.grid{columns:3 280px;column-gap:24px}
-.item{break-inside:avoid;margin:0 0 28px;display:block;width:100%;text-align:left;border:0;cursor:pointer;background:var(--card);padding:10px 10px 14px;box-shadow:var(--shadow);position:relative;transition:transform 220ms var(--ease-out)}
-.item:nth-child(4n+1){transform:rotate(-1deg)}.item:nth-child(4n+2){transform:rotate(.8deg)}.item:nth-child(4n+3){transform:rotate(-.4deg)}.item:nth-child(4n){transform:rotate(1.2deg)}
-@media(hover:hover) and (pointer:fine){.item:hover{transform:rotate(0) translateY(-2px)}.item:hover .thumb img{transform:scale(1.03)}}
-.item:focus-visible{transform:rotate(0)}
-.item .thumb img{transition:transform 300ms var(--ease-out)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.filters a{display:inline-flex;align-items:center;font-weight:700;font-size:15px;min-height:44px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);text-decoration:none;transition:background-color 150ms var(--ease-out),transform 120ms var(--ease-out)}
+.filters a span{font-weight:500;color:var(--muted);margin-left:6px}
+@media(hover:hover) and (pointer:fine){.filters a:hover{background:var(--ink);color:var(--card)}.filters a:hover span{color:var(--sky)}}
+.filters a:active{transform:scale(.97)}
+.lead{color:var(--muted);margin:0 0 30px;max-width:62ch}
+.shelf{margin:0 0 56px;scroll-margin-top:90px}
+.shelf-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:22px}
+.shelf-head h3{margin:0;font-size:clamp(24px,3vw,32px);font-weight:800;letter-spacing:-.02em}
+.shelf-head p{margin:4px 0 0;color:var(--muted);max-width:60ch}
+.tools{display:inline-block;font-size:13px;font-weight:600;background:var(--ink);color:var(--card);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.shelf[data-cat="design"] .grid,.shelf[data-cat="art"] .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.item{display:flex;flex-direction:column;width:100%;text-align:left;border:0;cursor:pointer;background:var(--card);padding:10px 10px 14px;box-shadow:var(--shadow);border-radius:6px;transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out)}
+@media(hover:hover) and (pointer:fine){.item:hover{transform:translateY(-3px)}.item:hover .thumb img{transform:scale(1.03)}}
 .item[hidden]{display:none}
-.item .thumb{position:relative;background:#e9e9e4;overflow:hidden}
-.item .thumb img{width:100%;height:auto;min-height:120px;object-fit:cover}
-.item .cap{padding:10px 4px 0}
-.item .cap strong{display:block;font-size:17px;line-height:1.25}
+.item .thumb{position:relative;background:var(--sky);overflow:hidden;border-radius:3px;aspect-ratio:16/9}
+.shelf[data-cat="design"] .item .thumb,.shelf[data-cat="art"] .item .thumb{aspect-ratio:4/5}
+.item .thumb img{width:100%;height:100%;object-fit:cover;transition:transform 300ms var(--ease-out)}
+.item .cap{padding:10px 4px 0;display:flex;flex-direction:column;gap:2px;flex:1}
+.item .cap strong{font-size:16px;line-height:1.3}
 .item .cap span{color:var(--muted);font-size:14px}
-.item .tape{width:70px;height:22px;top:-10px}
-/* small corner badge so it marks videos without hiding the frame */
+.item .kind{margin-top:auto;padding-top:8px;font-style:normal;font-weight:700;font-size:13px;color:var(--tomato)}
+.more{margin-top:18px}
 .play{position:absolute;left:10px;bottom:10px;width:38px;height:38px;border-radius:50%;background:var(--tomato);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.35)}
 .play::after{content:"";border-left:12px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px}
 
@@ -370,9 +375,10 @@ dialog[open]::backdrop{animation:fadeIn 200ms var(--ease-out)}
 </section>
 
 <section class="wrap" id="work" aria-labelledby="work-h">
-  <div class="head"><h2 id="work-h">Selected work</h2><span class="hand">click anything to open it</span></div>
-  <div class="filters" role="group" aria-label="Filter work"></div>
-  <div class="grid" id="grid"></div>
+  <div class="head"><h2 id="work-h">Selected work</h2><span class="hand">grouped by the role you're hiring for</span></div>
+  <p class="lead">Four shelves, strongest pieces first. Videos play in place; images open full size.</p>
+  <nav class="filters" id="shelfnav" aria-label="Jump to a type of work"></nav>
+  <div id="shelves"></div>
 </section>
 
 <section class="wrap" id="about" aria-labelledby="about-h">
@@ -525,7 +531,6 @@ const works = [
   {cat:'art', title:'Graphite portrait IV', sub:'Pencil', ...L('9ac8a2ea-49c3-485a-8b0e-588250f0062b')},
 ];
 const film = {title:'Mitolohiya (2022)', embed:'https://www.youtube-nocookie.com/embed/cZzwMUAXH8I?autoplay=1', link:'https://www.youtube.com/watch?v=cZzwMUAXH8I'};
-const CATS = [['all','Everything'],['edit','Video editing'],['motion','Motion, VFX and 3D'],['design','Graphic design'],['art','Illustration']];
 
 const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $ = s => document.querySelector(s);
@@ -541,21 +546,34 @@ document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click'
   catch { location.href = 'mailto:' + v; }
 }));
 
-// grid + filters
-const grid = $('#grid'), filters = $('.filters');
-filters.innerHTML = CATS.map(([k, label], i) => {
-  const n = k === 'all' ? works.length : works.filter(w => w.cat === k).length;
-  return `<button type="button" data-f="${k}" aria-pressed="${i === 0}">${label}<span>${n}</span></button>`;
-}).join('');
-grid.innerHTML = works.map((w, i) => `<button type="button" class="item" data-i="${i}" data-cat="${w.cat}" aria-label="Open ${esc(w.title)}">
-  ${i % 3 === 0 ? `<span class="tape ${['','t2','t3'][i % 3]}"></span>` : ''}
-  <div class="thumb"><img src="${w.thumb}" alt="" loading="lazy">${w.embed ? '<span class="play"></span>' : ''}</div>
-  <div class="cap"><strong>${esc(w.title)}</strong><span>${esc(w.sub)}</span></div></button>`).join('');
-filters.addEventListener('click', e => {
-  const b = e.target.closest('button'); if (!b) return;
-  filters.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
-  grid.querySelectorAll('.item').forEach(it => it.hidden = !(b.dataset.f === 'all' || it.dataset.cat === b.dataset.f));
-});
+// work shelves: one labelled block per discipline, best pieces first, first 6 shown
+const SHELVES = [
+  {cat:'edit', title:'Video editing', blurb:'Event recaps, teasers, a documentary entry and commercial spots.', tools:'Premiere Pro · color · sound',
+   order:['EdITHABLE EP7','Arcadia','The Paraverse','Outstanding Young Scientist','Santa Fe','WURI','Virtual World','SMART-AIMED','Grow: Stones','Susulitin','Color grading','What does']},
+  {cat:'motion', title:'Motion, VFX and 3D', blurb:'Title systems, logo and 2D animation, compositing and 3D scenes.', tools:'After Effects · Blender · Maya',
+   order:['Masterclass','Grow Series','Mitolohiya: Tala','Product showcase','Isometric','Island','Mitolohiya: harvest','Energy','Night-sky','Haunted','Campus','Department logo']},
+  {cat:'design', title:'Graphic design', blurb:'Event key visuals, social campaigns, infographics, posters and badge systems.', tools:'Photoshop · Illustrator',
+   order:['Trick or Tech','FEU Tech in numbers','Anak','Spooktacular','Your Digital Toolkit','Heritage Month: HABI','Inker','Nanolearning','Nowhere','Heritage Month: KUNDIMAN','Happy New Year','What underlies','An artist','Awit']},
+  {cat:'art', title:'Illustration', blurb:'Digital painting, vector illustration and graphite portraits.', tools:'Photoshop · Illustrator · pencil',
+   order:['Golden hour','Afternoon in','River','Malacañang','Capricorn','Pinoy heroes','Portrait study I','Graphite portrait I','Portrait study II','Graphite portrait II','Portrait study III','Graphite portrait III','Graphite portrait IV']},
+];
+const SHOW = 6;
+const rank = (sh, w) => { const i = sh.order.findIndex(o => w.title.startsWith(o)); return i < 0 ? 99 : i; };
+SHELVES.forEach(sh => sh.items = works.map((w, i) => ({...w, i})).filter(w => w.cat === sh.cat).sort((a, b) => rank(sh, a) - rank(sh, b)));
+$('#shelfnav').innerHTML = SHELVES.map(sh => `<a href="#shelf-${sh.cat}">${sh.title}<span>${sh.items.length}</span></a>`).join('');
+$('#shelves').innerHTML = SHELVES.map(sh => `<section class="shelf" id="shelf-${sh.cat}" data-cat="${sh.cat}" aria-labelledby="h-${sh.cat}">
+  <div class="shelf-head"><div><h3 id="h-${sh.cat}">${sh.title}</h3><p>${sh.blurb}</p></div><span class="tools">${sh.tools}</span></div>
+  <div class="grid">${sh.items.map((w, k) => `<button type="button" class="item" data-i="${w.i}" ${k >= SHOW ? 'hidden' : ''} aria-label="${w.embed ? 'Play' : 'View'} ${esc(w.title)}">
+    <div class="thumb"><img src="${w.thumb}" alt="" loading="lazy">${w.embed ? '<span class="play"></span>' : ''}</div>
+    <div class="cap"><strong>${esc(w.title)}</strong><span>${esc(w.sub)}</span><em class="kind">${w.embed ? 'Watch ▸' : 'View full size ▸'}</em></div></button>`).join('')}</div>
+  ${sh.items.length > SHOW ? `<button type="button" class="btn more" data-more="${sh.cat}" aria-expanded="false">Show all ${sh.items.length}</button>` : ''}
+</section>`).join('');
+document.querySelectorAll('[data-more]').forEach(b => b.addEventListener('click', () => {
+  const open = b.getAttribute('aria-expanded') !== 'true', items = b.parentElement.querySelectorAll('.item');
+  items.forEach((it, k) => it.hidden = !open && k >= SHOW);
+  b.setAttribute('aria-expanded', open); b.textContent = open ? 'Show fewer' : `Show all ${items.length}`;
+  if (open) items[SHOW]?.focus(); else b.parentElement.scrollIntoView({block: 'start'});
+}));
 
 // lightbox with prev / next through the currently visible pieces
 const lb = $('#lb'), frame = $('#lb-frame');
@@ -570,10 +588,11 @@ function show(w){
 }
 function openList(items, i, from){ list = items; pos = i; opener = from; show(list[pos]); if (!lb.open) lb.showModal(); reel.pause(); }
 function step(d){ if (list.length < 2) return; pos = (pos + d + list.length) % list.length; show(list[pos]); }
-grid.addEventListener('click', e => {
+// a card opens the lightbox; prev / next step through the whole shelf it belongs to
+$('#shelves').addEventListener('click', e => {
   const b = e.target.closest('.item'); if (!b) return;
-  const visible = [...grid.querySelectorAll('.item:not([hidden])')];
-  openList(visible.map(x => works[x.dataset.i]), visible.indexOf(b), b);
+  const all = [...b.closest('.shelf').querySelectorAll('.item')];
+  openList(all.map(x => works[x.dataset.i]), all.indexOf(b), b);
 });
 document.querySelector('[data-film]').addEventListener('click', e => openList([film], 0, e.currentTarget));
 $('#lb-prev').addEventListener('click', () => step(-1));
